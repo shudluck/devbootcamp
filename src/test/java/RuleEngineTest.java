@@ -1,4 +1,4 @@
-
+import org.javatuples.Pair;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,41 +7,32 @@ public class RuleEngineTest {
 
     RuleEngine ruleEngine = new RuleEngine();
 
-    int[] scores;
-
-    private static final int SCORE_ZERO = 0;
-    private static final int SCORE_NEGATIVE_ONE = -1;
-    private static final int SCORE_TWO = 2;
-    private static final int SCORE_THREE = 3;
+    Pair scores;
 
     @Test
     public void getScoreWhenBothCooperated(){
-        scores = ruleEngine.getScore(RuleEngine.MoveType.COOPERATE, RuleEngine.MoveType.COOPERATE);
-        assertEquals(SCORE_TWO,scores[0]);
-        assertEquals(SCORE_TWO,scores[1]);
+        scores = ruleEngine.getScore(MoveType.COOPERATE, MoveType.COOPERATE);
+        assertEquals(new Pair(ConstantsScore.SCORE_TWO, ConstantsScore.SCORE_TWO),scores);
     }
 
     @Test
     public void getScoreWhenPlayerCheatedMachineCooperated(){
-        scores = ruleEngine.getScore(RuleEngine.MoveType.CHEAT, RuleEngine.MoveType.COOPERATE);
+        scores = ruleEngine.getScore(MoveType.CHEAT, MoveType.COOPERATE);
 
-        assertEquals(SCORE_THREE,scores[0]);
-        assertEquals(SCORE_NEGATIVE_ONE,scores[1]);
+        assertEquals(new Pair(ConstantsScore.SCORE_THREE, ConstantsScore.SCORE_NEGATIVE_ONE),scores);
     }
 
     @Test
     public void getScoreWhenPlayerCooperatedMachineCheated(){
-        scores = ruleEngine.getScore(RuleEngine.MoveType.COOPERATE, RuleEngine.MoveType.CHEAT);
+        scores = ruleEngine.getScore(MoveType.COOPERATE, MoveType.CHEAT);
 
-        assertEquals(SCORE_NEGATIVE_ONE,scores[0]);
-        assertEquals(SCORE_THREE,scores[1]);
+        assertEquals(new Pair(ConstantsScore.SCORE_NEGATIVE_ONE, ConstantsScore.SCORE_THREE),scores);
     }
 
     @Test
     public void getScoreWhenBothCheated(){
-        scores = ruleEngine.getScore(RuleEngine.MoveType.CHEAT, RuleEngine.MoveType.CHEAT);
+        scores = ruleEngine.getScore(MoveType.CHEAT, MoveType.CHEAT);
 
-        assertEquals(SCORE_ZERO,scores[0]);
-        assertEquals(SCORE_ZERO,scores[1]);
+        assertEquals(new Pair(ConstantsScore.SCORE_ZERO, ConstantsScore.SCORE_ZERO),scores);
     }
 }
